@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Матрица навыков Frontend разработчика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .skills-container {
+            padding: 40px;
+        }
+
+        .level-section {
+            margin-bottom: 50px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .level-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .level-header {
+            padding: 25px 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .junior { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .middle { background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%); }
+        .senior { background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%); }
+        .lead { background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%); }
+
+        .level-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            background: white;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #007bff;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+            border-left-color: #0056b3;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .skills-list {
+            list-style: none;
+        }
+
+        .skills-list li {
+            padding: 8px 0;
+            color: #495057;
+            position: relative;
+            padding-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .skills-list li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #007bff;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .skills-list li:hover {
+            color: #007bff;
+        }
+
+        .skills-list li:hover:before {
+            transform: translateX(3px);
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .skills-container { padding: 20px; }
+            .skills-grid { grid-template-columns: 1fr; gap: 15px; padding: 20px; }
+            .legend { flex-direction: column; align-items: center; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Матрица навыков Frontend разработчика</h1>
+        </div>
+        
+        <div class="skills-container">
+            <!-- Junior Frontend Developer -->
+            <div class="level-section fade-in">
+                <div class="level-header junior">
+                    <div class="level-icon">J</div>
+                    <span>Junior Frontend Developer (0-2 года)</span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🌐</div>
+                            Основы веб-разработки
+                        </div>
+                        <ul class="skills-list">
+                            <li>HTML5 семантическая разметка</li>
+                            <li>CSS3, Flexbox, Grid</li>
+                            <li>Responsive дизайн</li>
+                            <li>БЭМ методология</li>
+                            <li>CSS препроцессоры (Sass/SCSS)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">⚛️</div>
+                            JavaScript & React
+                        </div>
+                        <ul class="skills-list">
+                            <li>ES6+ синтаксис</li>
+                            <li>React основы (JSX, компоненты)</li>
+                            <li>React hooks (useState, useEffect)</li>
+                            <li>Обработка событий</li>
+                            <li>Условный рендеринг</li>
+                            <li>Списки и ключи</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">📦</div>
+                            MobX основы
+                        </div>
+                        <ul class="skills-list">
+                            <li>Observable состояние</li>
+                            <li>Actions для изменения состояния</li>
+                            <li>Observer компоненты</li>
+                            <li>Computed значения</li>
+                            <li>Базовая структура store</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🛠️</div>
+                            Инструменты
+                        </div>
+                        <ul class="skills-list">
+                            <li>Create React App</li>
+                            <li>npm/yarn</li>
+                            <li>Git основы</li>
+                            <li>VS Code</li>
+                            <li>Chrome DevTools</li>
+                            <li>React Developer Tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Frontend Developer -->
+            <div class="level-section fade-in">
+                <div class="level-header middle">
+                    <div class="level-icon">M</div>
+                    <span>Middle Frontend Developer (2-4 года)</span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">⚛️</div>
+                            React продвинутый
+                        </div>
+                        <ul class="skills-list">
+                            <li>useContext, useReducer</li>
+                            <li>Custom hooks</li>
+                            <li>React.memo, useMemo, useCallback</li>
+                            <li>Error Boundaries</li>
+                            <li>Code splitting (lazy, Suspense)</li>
+                            <li>Higher-Order Components</li>
+                            <li>Render props паттерн</li>
+                            <li>React Router</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">📊</div>
+                            MobX продвинутый
+                        </div>
+                        <ul class="skills-list">
+                            <li>MobX State Tree (MST)</li>
+                            <li>Reactions (autorun, when)</li>
+                            <li>Async actions</li>
+                            <li>Модульная архитектура stores</li>
+                            <li>MobX-react-lite</li>
+                            <li>Декораторы (@observable, @action)</li>
+                            <li>RunInAction для async</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">💻</div>
+                            JavaScript продвинутый
+                        </div>
+                        <ul class="skills-list">
+                            <li>TypeScript основы</li>
+                            <li>Promises, async/await</li>
+                            <li>Fetch API</li>
+                            <li>Замыкания, контекст</li>
+                            <li>Прототипы</li>
+                            <li>Модули ES6</li>
+                            <li>Destructuring, spread/rest</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🎨</div>
+                            Стилизация
+                        </div>
+                        <ul class="skills-list">
+                            <li>CSS-in-JS (styled-components)</li>
+                            <li>CSS Modules</li>
+                            <li>PostCSS</li>
+                            <li>UI библиотеки (Ant Design, Material-UI)</li>
+                            <li>Анимации (CSS, Framer Motion)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🔧</div>
+                            Инструменты и сборка
+                        </div>
+                        <ul class="skills-list">
+                            <li>Webpack основы</li>
+                            <li>Vite</li>
+                            <li>ESLint, Prettier</li>
+                            <li>Husky, lint-staged</li>
+                            <li>Jest, React Testing Library</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🌐</div>
+                            API и HTTP
+                        </div>
+                        <ul class="skills-list">
+                            <li>RESTful API</li>
+                            <li>Axios/fetch</li>
+                            <li>Обработка ошибок</li>
+                            <li>Кэширование запросов</li>
+                            <li>Загрузка файлов</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Senior Frontend Developer -->
+            <div class="level-section fade-in">
+                <div class="level-header senior">
+                    <div class="level-icon">S</div>
+                    <span>Senior Frontend Developer (4-7 лет)</span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🏗️</div>
+                            Архитектура
+                        </div>
+                        <ul class="skills-list">
+                            <li>Микрофронтенды</li>
+                            <li>Feature-sliced design</li>
+                            <li>Clean Architecture</li>
+                            <li>SOLID принципы</li>
+                            <li>Dependency Injection</li>
+                            <li>Паттерны проектирования</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">📘</div>
+                            TypeScript продвинутый
+                        </div>
+                        <ul class="skills-list">
+                            <li>Generics</li>
+                            <li>Conditional types</li>
+                            <li>Mapped types</li>
+                            <li>Utility types</li>
+                            <li>Type guards</li>
+                            <li>Declaration merging</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">⚡</div>
+                            Производительность
+                        </div>
+                        <ul class="skills-list">
+                            <li>Bundle анализ</li>
+                            <li>Tree shaking</li>
+                            <li>Lazy loading</li>
+                            <li>Virtualization списков</li>
+                            <li>Service Workers</li>
+                            <li>Web Vitals</li>
+                            <li>Profiling и оптимизация</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🧪</div>
+                            Тестирование
+                        </div>
+                        <ul class="skills-list">
+                            <li>Unit тестирование (Jest)</li>
+                            <li>Integration тесты</li>
+                            <li>E2E (Cypress, Playwright)</li>
+                            <li>Visual regression тесты</li>
+                            <li>TDD подход</li>
+                            <li>Mock strategies</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🔄</div>
+                            CI/CD и деплой
+                        </div>
+                        <ul class="skills-list">
+                            <li>GitHub Actions</li>
+                            <li>Docker основы</li>
+                            <li>Vercel, Netlify</li>
+                            <li>Environment конфигурация</li>
+                            <li>Monitoring и logging</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🌐</div>
+                            Современные технологии
+                        </div>
+                        <ul class="skills-list">
+                            <li>Next.js (SSR, SSG)</li>
+                            <li>GraphQL с Apollo</li>
+                            <li>PWA</li>
+                            <li>WebSockets</li>
+                            <li>Web Workers</li>
+                            <li>WebAssembly основы</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Frontend Developer -->
+            <div class="level-section fade-in">
+                <div class="level-header lead">
+                    <div class="level-icon">L</div>
+                    <span>Lead Frontend Developer / Tech Lead (7+ лет)</span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">👥</div>
+                            Лидерство
+                        </div>
+                        <ul class="skills-list">
+                            <li>Менторинг разработчиков</li>
+                            <li>Code review процессы</li>
+                            <li>Техническое планирование</li>
+                            <li>Архитектурные решения</li>
+                            <li>Управление техническим долгом</li>
+                            <li>Кросс-командное взаимодействие</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🏢</div>
+                            Enterprise решения
+                        </div>
+                        <ul class="skills-list">
+                            <li>Монорепозитории (Lerna, Nx)</li>
+                            <li>Масштабируемые архитектуры</li>
+                            <li>Security best practices</li>
+                            <li>A/B тестирование</li>
+                            <li>Интернационализация (i18n)</li>
+                            <li>Accessibility (a11y)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">📊</div>
+                            Аналитика и метрики
+                        </div>
+                        <ul class="skills-list">
+                            <li>Performance мониторинг</li>
+                            <li>Error tracking (Sentry)</li>
+                            <li>Analytics интеграция</li>
+                            <li>Business метрики</li>
+                            <li>Conversion optimization</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🔧</div>
+                            DevOps для фронтенда
+                        </div>
+                        <ul class="skills-list">
+                            <li>Infrastructure as Code</li>
+                            <li>CDN оптимизация</li>
+                            <li>Edge computing</li>
+                            <li>Blue-green деплойменты</li>
+                            <li>Feature toggles</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🎯</div>
+                            Бизнес навыки
+                        </div>
+                        <ul class="skills-list">
+                            <li>Продуктовое мышление</li>
+                            <li>Оценка задач</li>
+                            <li>Техническая документация</li>
+                            <li>Презентация решений</li>
+                            <li>Найм и интервьюирование</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <div class="category-title">
+                            <div class="category-icon">🚀</div>
+                            Инновации
+                        </div>
+                        <ul class="skills-list">
+                            <li>Исследование новых технологий</li>
+                            <li>POC разработка</li>
+                            <li>Tech talks и knowledge sharing</li>
+                            <li>Open source участие</li>
+                            <li>Community involvement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);"></div>
+                <span>Junior (0-2 года)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);"></div>
+                <span>Middle (2-4 года)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);"></div>
+                <span>Senior (4-7 лет)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%);"></div>
+                <span>Lead (7+ лет)</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Добавляем интерактивность
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.level-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-in';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Hover эффекты для категорий навыков
+            const skillCategories = document.querySelectorAll('.skill-category');
+            skillCategories.forEach(category => {
+                category.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                category.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
